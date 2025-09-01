@@ -1,9 +1,12 @@
 from django.urls import path
 from . import views
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_view
 from .forms import LoginForm, MyPasswordResetForm, MyPasswordChangeForm, MySetPasswordForm
+
+
 urlpatterns = [
     path("",views.home),
     path("about/",views.about,name="about"),
@@ -17,9 +20,18 @@ urlpatterns = [
    
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
     path('cart/', views.show_cart, name='showcart'),
-    path('checkout/', views.show_cart, name='checkout'),
+    path('checkout/', views.checkout.as_view(), name='checkout'),
+    path('paymentdone/', views.payment_done, name='paymentdone'),
+    path('orders/', views.orders, name = 'orders'),
+
+    path('search/',views.search,name='search'),
 
     path('pluscart/', views.plus_cart),
+    path('minuscart/', views.minus_cart),
+    path('removecart/', views.remove_cart),
+    path('pluswishlist/', views.plus_wishlist),
+    path('minuswishlist/', views.minus_wishlist),
+    path('wishlist/', views.show_wishlist,name="showwishlist"),
 
     # Login Authentication
     path('registration/',views.CustomerRegistrationView.as_view(),name='customerregistration'),
@@ -45,3 +57,8 @@ urlpatterns = [
 
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = "Neel Dairy"
+admin.site.site_title = "Neel Dairy"
+admin.site.site_index_title = "Welcome to Neel Dairy"
